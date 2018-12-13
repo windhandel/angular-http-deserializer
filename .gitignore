@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.DS_Store
+.vscode/
+
+.npm
+.eslintcache
+
+# Ignore npm/yarn debug log
+npm-debug.log
+yarn-error.log
