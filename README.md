@@ -9,7 +9,7 @@ Therefore, any getters, methods, etc on the model object being returned will not
 
 Without the use of this module, the objects being created by the angular http client are not **instances of the model**.
 
-```
+```javascript
 showConfig() {
   this.configService.getConfig()
     .subscribe((data: Config) => {
@@ -35,13 +35,14 @@ Deeply nested (including array) objects are not handled with this solution witho
 This solution has a number of pitfalls.  The Date data type is entirely missed because the incoming Json type will be string or number and will be assigned as such on the constructed object, thereby overwriting the property with the wrong type.
 
 [Fail](https://jsfiddle.net/windhandelimprov/upkrd4bj/3/): 
-```
+```javascript
 class Cow {
   sound: string;
   createdDate: Date;
 }
 
 let cow: Cow = Object.assign(new Cow(), res as Cow);
+// Fails
 expect(cow.createdDate instanceOf Date).toBeTruth();
 ```
 
@@ -88,58 +89,73 @@ In order to utilize and emit the necessary @dataType annotation you have to setu
 
 This library uses a minimalistic model annotation methodology in order to reduce the amount of effort involved in annotating the model object.  This was one of the perceived downsides of existing deserialization libraries on npm.
 
-> import { dataType } from 'angular-http-deserializer';
-> 
-> export class User {
->     id: number;
->     name: string;
->     **@dataType(Date)** // Dates must be annotated
->     createdDate: Date;
->     get wasCreatedFirstOfMonth() : boolean {
->         return this.createdDate.getDate() == 1;
->     }
-> }
-> 
-> export class Product {
->     id: number;
->     name: string;
-> 
->     get hasName(): boolean {
->         return !!this.name;
->     }
-> }
-> 
-> export class OrderProduct {
->     **@dataType(Product)**
->     product: Product;
->     quantity: number;
-> }
-> 
-> export class Order {
->     id: number;
->     **@dataType(OrderProduct, true)** // Second parameter (true) specifies an array
->     products: OrderProduct[];
->     **@dataType(User)**
->     orderedBy: User;
->     **@dataType(Date)**
->     createdDate: Date;
-> }
+```typescript
+import { dataType } from 'angular-http-deserializer';
+
+export class User {
+    id: number;
+    name: string;
+
+    @dataType(Date)
+    createdDate: Date;
+    
+    get wasCreatedFirstOfMonth() : boolean {
+        return this.createdDate.getDate() == 1;
+    }
+}
+
+export class Product {
+    id: number;
+    name: string;
+
+    get hasName(): boolean {
+        return !!this.name;
+    }
+}
+
+export class OrderProduct {
+
+    @dataType(Product)
+    product: Product;
+
+    quantity: number;
+}
+
+export class Order {
+    id: number;
+
+    @dataType(OrderProduct, true) // Second parameter indicates isArray
+    products: OrderProduct[];
+
+    @dataType(User)
+    orderedBy: User;
+
+    @dataType(Date)
+    createdDate: Date;
+}
+```
 
 # Http Client Deserialization Injection
 
 You'll need to first import the deserializer into your service.
 
-`import deserializer from "angular-http-deserializer";`
+```typescript
+import deserializer from 'angular-http-deserializer';
+```
 
 From the angular http client examples:
 
-> showConfig() {
->   this.configService.getConfig()**.map(deserialize<Config>(Config))**
->     .subscribe((data: Config) => this.config = {
->         heroesUrl: data['heroesUrl'],
->         textfile:  data['textfile']
->     });
-> }
+```javascript
+showConfig() {
+  this.configService.getConfig()
+    // Deserializer function provided to map function.
+    .map(deserialize<Config>(Config))
+    .subscribe((data: Config) => this.config = {
+        heroesUrl: data['heroesUrl'],
+        textfile:  data['textfile']
+    });
+}
+```
 
 Without the mapping and proper deserialization, the objects coming out of the Http Client will fail instanceof checks.
 
@@ -147,8 +163,8 @@ Without the mapping and proper deserialization, the objects coming out of the Ht
 
 Since your view can now expect non-duck typed objects (*real*) you'll likely want to change around some test code.  You'll want to take your regular json objects within your tests and convert them into real objects.  There's two ways you can do that, you can construct the normal deserializer as you would within a service that uses the Http Client or you can use the deepDeserializer.  This is an example of how this would work.
 
-```
-import { deepDeserializer } from "angular-http-deserializer";
+```typescript
+import { deepDeserializer } from 'angular-http-deserializer';
 
 let productQtyJson  {
     product: null,
@@ -166,17 +182,24 @@ The deserializer is built fairly resiliently so that most things pass.  Currentl
 There are 4 expected exceptions within this module. They are the following:
 
 1. Missing necessary dataType annotation.
+
 Reason: When a property is an object, but offers no @dataType annotation to deserialize object.
 Message: DataType annotation missing on Type ${type.prototype.constructor.name} field ${key}
+
 2. Expected array.
+
 Reason: When a data annotation is marked as array, but the data is not an array.
 Messages:
   Array deserialization error. ${type.prototype.constructor.name}.${key} must be array.
   Array deserialization error. Object must be array.
+
 3. Array not expected.
+
 Reason: When a data annotation is **not** marked as array, but the data is.
 Message: ${type.prototype.constructor.name}.${key} array not expected.
+
 4. Invalid Date cast type.
-Readon: Dates may be cast from 2 types, string and number.  Null or undefined are simply returned.
+
+Reason: Dates may be cast from 2 types, string and number.  Null or undefined are simply returned.
  If an unexpected data type is found, an exception is thrown. 
 Message: Date cannot be cast from type ${typeString}
