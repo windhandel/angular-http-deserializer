@@ -19,9 +19,14 @@
       "dom"
     ]
   },
+  "include": [
+    "src/**/*",
+    "test/**/*"
+  ],
   "exclude": [
     "node_modules",
     "build",
-    "output"
+    "output",
+    "test"
   ]
 }

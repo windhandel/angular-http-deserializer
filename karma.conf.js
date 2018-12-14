@@ -10,12 +10,15 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'karma-typescript'],
-
+    frameworks: [
+      'jasmine',
+      'karma-typescript'
+    ],
 
     // list of files / patterns to load in the browser
     files: [
-      'src/**/*.ts'
+      'src/**/*.ts',
+      'test/**/*.ts'
     ],
 
     // list of files / patterns to exclude
@@ -32,15 +35,33 @@ module.exports = function(config) {
 					]
 				}
 			},
-			compilerOptions: {
-				noImplicitAny: true,
+			"compilerOptions": {
+        "baseUrl": "./src",
+        "outDir": "./dist/out-tsc",
+        "sourceMap": true,
+        "declaration": false,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "target": "es6",
+        "typeRoots": [
+          "node_modules/@types"
+        ],
+        "lib": [
+          "es2018",
+          "dom"
+        ]
       },
       "lib": [
         "es2018",
         "dom"
       ],
-      tsconfig: './tsconfig.test.json',
-      exclude: ['./node_modules/**/*.d.ts']
+      tsconfig: './tsconfig.json',
+      exclude: [
+        './node_modules/**/*.d.ts'
+      ]
     },
 
     // preprocess matching files before serving them to the browser
