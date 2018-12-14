@@ -45,11 +45,11 @@ let cow: Cow = Object.assign(new Cow(), res as Cow);
 expect(cow.createdDate instanceOf Date).toBeTruth();
 ```
 
-* [Object.setPrototypeOf](https://stackoverflow.com/questions/35573527/angular-2-map-http-response-to-instance-of-class)
+* [Object.setPrototypeOf](https://stackoverflow.com/questions/50452431/angular-6-httpclient-return-instance-of-class#answer-50469920)
 
-This has the previously mentioned issues, along with being [very poor performance as described here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf).
+This has the previously mentioned issues, along with being [very poor performance as described here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf#answer-43790188).
 
-* [Input Parameters Constructor](https://stackoverflow.com/questions/50452431/angular-6-httpclient-return-instance-of-class)
+* [Input Parameters Constructor](https://stackoverflow.com/questions/50452431/angular-6-httpclient-return-instance-of-class#answer-50469920)
 
 All of previously mentioned issues.
 
