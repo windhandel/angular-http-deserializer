@@ -49,7 +49,7 @@ expect(cow.createdDate instanceOf Date).toBeTruth();
 
 This has the previously mentioned issues, along with being [very poor performance as described here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf).
 
-* [Input Parameters Constructor](https://stackoverflow.com/questions/50452431/angular-6-httpclient-return-instance-of-class#answer-50469920)
+* [Input Parameters Constructor](https://stackoverflow.com/questions/49499941/cant-map-angular5-httpclient-responses-to-my-typescript-classes#answer-49500145)
 
 All of previously mentioned issues.
 
