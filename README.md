@@ -34,7 +34,7 @@ Deeply nested (including array) objects are not handled with this solution witho
 
 This solution has a number of pitfalls.  The Date data type is entirely missed because the incoming Json type will be string or number and will be assigned as such on the constructed object, thereby overwriting the property with the wrong type.
 
-Fail: 
+[Fail](https://jsfiddle.net/windhandelimprov/upkrd4bj/3/): 
 ```
 class Cow {
   sound: string;
@@ -88,50 +88,42 @@ In order to utilize and emit the necessary @dataType annotation you have to setu
 
 This library uses a minimalistic model annotation methodology in order to reduce the amount of effort involved in annotating the model object.  This was one of the perceived downsides of existing deserialization libraries on npm.
 
-```
-import { dataType } from 'angular-http-deserializer';
-
-export class User {
-    id: number;
-    name: string;
-    @dataType(Date)
-    createdDate: Date;
-    get wasCreatedFirstOfMonth() : boolean {
-        return this.createdDate.getDate() == 1;
-    }
-}
-
-export class Product {
-    id: number;
-    name: string;
-
-    get hasName(): boolean {
-        return !!this.name;
-    }
-}
-
-export class OrderProduct {
-    @dataType(Product)
-    product: Product;
-    quantity: number;
-}
-
-export class Order {
-    id: number;
-    @dataType(OrderProduct, true)
-    products: OrderProduct[];
-    @dataType(User)
-    orderedBy: User;
-    @dataType(Date)
-    createdDate: Date;
-}
-
-export class ErrorNotArrayOrderProduct {
-    @dataType(Product, true)
-    product: Product;
-    quantity: number;
-}
-```
+> import { dataType } from 'angular-http-deserializer';
+> 
+> export class User {
+>     id: number;
+>     name: string;
+>     **@dataType(Date)** // Dates must be annotated
+>     createdDate: Date;
+>     get wasCreatedFirstOfMonth() : boolean {
+>         return this.createdDate.getDate() == 1;
+>     }
+> }
+> 
+> export class Product {
+>     id: number;
+>     name: string;
+> 
+>     get hasName(): boolean {
+>         return !!this.name;
+>     }
+> }
+> 
+> export class OrderProduct {
+>     **@dataType(Product)**
+>     product: Product;
+>     quantity: number;
+> }
+> 
+> export class Order {
+>     id: number;
+>     **@dataType(OrderProduct, true)** // Second parameter (true) specifies an array
+>     products: OrderProduct[];
+>     **@dataType(User)**
+>     orderedBy: User;
+>     **@dataType(Date)**
+>     createdDate: Date;
+> }
 
 # Http Client Deserialization Injection
 
@@ -141,15 +133,13 @@ You'll need to first import the deserializer into your service.
 
 From the angular http client examples:
 
-```
-showConfig() {
-  this.configService.getConfig()**.map(deserialize<Config>(Config))**
-    .subscribe((data: Config) => this.config = {
-        heroesUrl: data['heroesUrl'],
-        textfile:  data['textfile']
-    });
-}
-```
+> showConfig() {
+>   this.configService.getConfig()**.map(deserialize<Config>(Config))**
+>     .subscribe((data: Config) => this.config = {
+>         heroesUrl: data['heroesUrl'],
+>         textfile:  data['textfile']
+>     });
+> }
 
 Without the mapping and proper deserialization, the objects coming out of the Http Client will fail instanceof checks.
 
