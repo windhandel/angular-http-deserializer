@@ -3,7 +3,7 @@ Angular Http Deserializer
 
 The current Angular Http Client, since it uses typescript, uses duck typing for returning objects.  i.e. The object being returned is not a constructed version of the object which you wish to have returned.
 
-Therefore, any gettors, methods, etc on the model object being returned will not exist.  This library was built specifically in order to eliminate this problem and provide a way of easily returning constructed instances of the model objects from the Angular Http Client.
+Therefore, any getters, methods, etc on the model object being returned will not exist.  This library was built specifically in order to eliminate this problem and provide a way of easily returning constructed instances of the model objects from the Angular Http Client.
 
 # Problem Statement
 
@@ -19,6 +19,42 @@ showConfig() {
     });
 }
 ```
+
+A dialog of the issue [can be seen here](https://github.com/angular/angular/issues/20770).
+
+# Wrong or Partial Answers
+
+Some solutions on SO include:
+
+* [Object.assign After Construction](https://stackoverflow.com/questions/50452431/angular-6-httpclient-return-instance-of-class)
+
+This solution is not simple enough and requires you to write constructors for each object in order for your objec to deserialized.
+
+Deeply nested (including array) objects are not handled with this solution without more custom code.
+
+This solution has a number of pitfalls.  The Date data type is entirely missed because the incoming Json type will be string or number and will be assigned as such on the constructed object, thereby overwriting the property with the wrong type.
+
+Fail: 
+```
+class Cow {
+  sound: string;
+  createdDate: Date;
+}
+
+let cow: Cow = Object.assign(new Cow(), res as Cow);
+expect(cow.createdDate instanceOf Date).toBeTruth();
+```
+
+* [Object.setPrototypeOf](https://stackoverflow.com/questions/35573527/angular-2-map-http-response-to-instance-of-class)
+
+This has the previously mentioned issues, along with being [very poor performance as described here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf).
+
+* [Input Parameters Constructor](https://stackoverflow.com/questions/50452431/angular-6-httpclient-return-instance-of-class)
+
+All of previously mentioned issues.
+
+This solution you have to write static createInstance, a constructor code and it has the aforementioned pitfalls.
+
 
 # Usage
 
