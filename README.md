@@ -25,12 +25,12 @@ showConfig() {
 The following are the required prerequisites:
 
 1. [Use TypeScript](https://www.typescriptlang.org/docs/handbook/angular.html)
-2. [Installation]
-3. [Configuration] Completed
-4. [Model Annotation]
-5. [Http Client Deserializer Injection]
-6. [Test Updates]
-7. [Expected Exceptions]
+2. [Installation](#installation)
+3. [Configuration Completed](#configuration)
+4. [Model Annotation](#model-annotation)
+5. [Http Client Deserializer Injection](#http-client-deserializer-injection)
+6. [Test Updates](#test-updates)
+7. [Expected Exceptions](#expected-exceptions)
 
 # Installation
 
