@@ -1,4 +1,4 @@
-import deserializer, { deepDeserializeSig, primitiveObjectOrArray, outputValue, inputValue } from "./deserializer";
+import deserializer, { deepDeserializeSig, primitiveObjectOrArray, outputValue, inputValue } from './index';
 import dateFormat from 'dateformat';
 
 function be<T extends outputValue>(deserializer: deepDeserializeSig<T>, input: primitiveObjectOrArray<inputValue>, output?: primitiveObjectOrArray<T>, comparisonConverter?: (v) => any) : void {

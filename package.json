@@ -2,7 +2,8 @@
   "name": "angular-http-deserializer",
   "version": "1.0.0",
   "description": "Deserialization Interceptor for Angular",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types" : "dist/index.d.ts",
   "dependencies": {
     "dateformat": "^3.0.3",
     "reflect-metadata": "^0.1.12",
@@ -33,7 +34,7 @@
     "httpclient",
     "client"
   ],
-  "author": "Jeff Fishcer",
+  "author": "Jeff Fischer (angular.http.deserializer@gmail.com)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/windhandel/angular-http-deserializer/issues"

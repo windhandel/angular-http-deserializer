@@ -1,5 +1,5 @@
 import * as Complex from './complex';
-import deserializer from "./deserializer";
+import deserializer from './index';
 
 let jsonOrder = {
     id: 1234142,

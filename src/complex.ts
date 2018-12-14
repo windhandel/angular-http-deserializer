@@ -1,4 +1,4 @@
-import { dataType } from './deserializer';
+import { dataType } from './index';
 
 export class User {
     id: number;
