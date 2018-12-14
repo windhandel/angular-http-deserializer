@@ -26,7 +26,7 @@ A dialog of the issue [can be seen here](https://github.com/angular/angular/issu
 
 Some solutions on SO include:
 
-* [Object.assign After Construction](https://stackoverflow.com/questions/50452431/angular-6-httpclient-return-instance-of-class)
+* [Object.assign After Construction](https://stackoverflow.com/questions/50452431/angular-6-httpclient-return-instance-of-classanswer-50469920)
 
 This solution is not simple enough and requires you to write constructors for each object in order for your objec to deserialized.
 
@@ -45,9 +45,9 @@ let cow: Cow = Object.assign(new Cow(), res as Cow);
 expect(cow.createdDate instanceOf Date).toBeTruth();
 ```
 
-* [Object.setPrototypeOf](https://stackoverflow.com/questions/50452431/angular-6-httpclient-return-instance-of-class#answer-50469920)
+* [Object.setPrototypeOf](https://stackoverflow.com/questions/49499941/cant-map-angular5-httpclient-responses-to-my-typescript-classes#answer-49500145)
 
-This has the previously mentioned issues, along with being [very poor performance as described here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf#answer-43790188).
+This has the previously mentioned issues, along with being [very poor performance as described here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf).
 
 * [Input Parameters Constructor](https://stackoverflow.com/questions/50452431/angular-6-httpclient-return-instance-of-class#answer-50469920)
 
