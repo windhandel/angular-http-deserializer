@@ -26,7 +26,7 @@ A dialog of the issue [can be seen here](https://github.com/angular/angular/issu
 
 Some solutions on SO include:
 
-* [Object.assign After Construction](https://stackoverflow.com/questions/50452431/angular-6-httpclient-return-instance-of-classanswer-50469920)
+* [Object.assign After Construction](https://stackoverflow.com/questions/50452431/angular-6-httpclient-return-instance-of-class#answer-50469920)
 
 This solution is not simple enough and requires you to write constructors for each object in order for your objec to deserialized.
 
