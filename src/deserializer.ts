@@ -26,7 +26,7 @@ export class DataType {
     }
 }
 
-function getDataType(target: any, propertyKey: string): DataType {
+export function getDataType(target: any, propertyKey: string): DataType {
     return new DataType(
         Reflect.getMetadata(dataTypeMetadataKey, target, propertyKey),
         Reflect.getMetadata(isArrayMetadataKey, target, propertyKey)
@@ -60,12 +60,14 @@ function factory<T>(class_: newable): T {
     return new class_() as T;
 }
 
-export function deserializer<T extends outputValue>(type: newable): deepDeserializeSig<T> {
+export default function deserializer<T extends outputValue>(type: newable): deepDeserializeSig<T> {
     return deepDeserialize.bind(this, type);
 }
 
 const stringType = 'string';
-export function converter<T extends outputValue>(type: newable, valueTypeString: typeofOrDate, deserializeValue: primitiveObjectOrArray<inputValue>, mustBeArray: boolean): any {
+const objectType = 'object';
+const undefinedType = 'undefined';
+function converter<T extends outputValue>(type: newable, valueTypeString: typeofOrDate, deserializeValue: primitiveObjectOrArray<inputValue>, mustBeArray: boolean): any {
     let typeString = type ? type.prototype.constructor.name.toLowerCase() : valueTypeString;
 
     // if it doesn't match one of the types, then the constructor is a custom object type.
@@ -99,37 +101,36 @@ export function converter<T extends outputValue>(type: newable, valueTypeString:
                     return new Date(<number>deserializeValue);
                 case 'string':
                     return new Date(stringValue);
+                case 'undefined':
+                    return deserializeValue;
                 default:
                     throw new Error(`Date cannot be cast from type ${typeString}`);
             }
         case 'undefined': // null comes across as typeof undefined
             return deserializeValue as any;
         case 'object':
+            if (valueTypeString == undefinedType) {
+                return deserializeValue;
+            }
             return deepDeserialize(type, deserializeValue, mustBeArray);
         default:
             return null;
     }
 }
 
-const objectType = 'object';
-// // const dateType = 'date';
-// function getTypeString(type: newable, typeValue: any): typeofOrDate {
-//     // if (type == Date) {
-//     //     return dateType;
-//     // }
-
-//     return typeof typeValue;
-// }
-
 export function deepDeserialize<T extends outputValue>(type: newable,
-    deserialize?: primitiveObjectOrArray<inputValue>, mustBeArray: boolean = false): primitiveObjectOrArray<T> {
+    deserialize: primitiveObjectOrArray<inputValue>, mustBeArray?: boolean): primitiveObjectOrArray<T> {
     //debugger;
     const isArray = Array.isArray(deserialize);
-    let typeCheckValue: inputValue = isArray ? (<any>deserialize)[0] : deserialize;
+    const typeCheckValue: inputValue = isArray ? (<any>deserialize)[0] : deserialize;
     let typeString: typeofOrDate = typeof typeCheckValue;
-    let isObject = typeString == objectType;
+    // "Correct" typeof return object.
+    if (typeCheckValue == null || typeCheckValue == undefined) {
+        typeString = 'undefined';
+    }
+    const isObject = typeString == objectType;
 
-    if (mustBeArray && (!isArray || typeString == 'undefined')) {
+    if (mustBeArray != undefined && mustBeArray && (!isArray || typeString == 'undefined')) {
         throw new Error('Array deserialization error. Object must be array.');
     }
 
@@ -143,15 +144,23 @@ export function deepDeserialize<T extends outputValue>(type: newable,
         // We need to perfor the 
         for (let key of Object.keys(deserialize)) {
             let keyValue = deserialize[key];
-            let dataType: newable = getDataType(newO, key);
-            let typeString: typeofOrDate = typeof keyValue;
+            let dataType: DataType = getDataType(newO, key);
+            let propTypeString: typeofOrDate = typeof keyValue;
 
             // If this is an object type, we need to ensure we picked up the constructor for it.
-            if (typeString == objectType && !dataType.Type) {
+            if (propTypeString == objectType && !dataType.Type) {
                 throw new Error(`DataType annotation missing on Type ${type.prototype.constructor.name} field ${key}`);
             }
 
-            newO[key] = converter<T>(dataType.Type, typeString, keyValue, dataType.IsArray);
+            if (dataType.IsArray && (!Array.isArray(keyValue) || propTypeString == 'undefined')) {
+                throw new Error(`Array deserialization error. ${type.prototype.constructor.name}.${key} must be array.`);
+            }
+
+            if (!dataType.IsArray && Array.isArray(keyValue)) {
+                throw new Error(`${type.prototype.constructor.name}.${key} array not expected.`);
+            }
+
+            newO[key] = converter<T>(dataType.Type, propTypeString, keyValue, dataType.IsArray);
         }
 
         return newO;

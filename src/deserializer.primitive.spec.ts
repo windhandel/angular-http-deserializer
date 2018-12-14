@@ -1,12 +1,16 @@
-import { deserializer, deepDeserializeSig, primitiveObjectOrArray, outputValue, inputValue } from "./deserializer";
+import deserializer, { deepDeserializeSig, primitiveObjectOrArray, outputValue, inputValue } from "./deserializer";
 import dateFormat from 'dateformat';
 
-function be<T extends outputValue>(deserializer: deepDeserializeSig<T>, input: primitiveObjectOrArray<inputValue>, output: primitiveObjectOrArray<T>, comparisonConverter?: (v) => any) : void {
+function be<T extends outputValue>(deserializer: deepDeserializeSig<T>, input: primitiveObjectOrArray<inputValue>, output?: primitiveObjectOrArray<T>, comparisonConverter?: (v) => any) : void {
     let value = deserializer(input);
     if (comparisonConverter) {
         expect(comparisonConverter(value)).toEqual(comparisonConverter(output));
     } else {
-        expect(value).toEqual(output);
+        if (output != undefined) {
+            expect(value).toEqual(output);
+        } else {
+            expect(value).toBe(null);
+        }
     }
 };
 
@@ -31,6 +35,10 @@ describe('Deserialize Basic Types', () => {
         be(deString, input, input);
     });
 
+    it('should deserialize null string', () => {
+        be(deString, null);
+    });
+
     it('should deserialize string array', () => {
         let input = [ '2', '4' ];
         be(deString, input, input);
@@ -39,6 +47,10 @@ describe('Deserialize Basic Types', () => {
     it('should deserialize number', () => {
         let input = 2;
         be(deNumber, input.toString(), input);
+    });
+
+    it('should deserialize null number', () => {
+        be(deNumber, null);
     });
 
     it('should deserialize number array', () => {
@@ -50,6 +62,10 @@ describe('Deserialize Basic Types', () => {
     it('should deserialize string date', () => {
         let input = new Date();
         be(deDate, dateFormat(input, 'yyyy-mm-dd HH:MM:ss.l'), input, dateComparer);
+    });
+
+    it('should deserialize null date', () => {
+        be(deDate, null);
     });
 
     it('should deserialize string date array', () => {
@@ -68,6 +84,10 @@ describe('Deserialize Basic Types', () => {
     it('should deserialize boolean false', () => {
         let input = false;
         be(deBool, input.toString(), input);
+    });
+
+    it('should deserialize null boolean', () => {
+        be(deBool, null);
     });
 
     it('should deserialize boolean string true', () => {

@@ -34,3 +34,10 @@ export class Order {
     @dataType(Date)
     createdDate: Date;
 }
+
+export class ErrorNotArrayOrderProduct {
+    @dataType(Product, true)
+    product: Product;
+    quantity: number;
+}
+
