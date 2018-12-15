@@ -70,6 +70,7 @@ The following are the required prerequisites:
 5. [Http Client Deserializer Injection](#http-client-deserializer-injection)
 6. [Test Updates](#test-updates)
 7. [Expected Exceptions](#expected-exceptions)
+8. [Example Angular Project](#example-project)
 
 # Installation
 
@@ -205,3 +206,7 @@ Message: ${type.prototype.constructor.name}.${key} array not expected.
 Reason: Dates may be cast from 2 types, string and number.  Null or undefined are simply returned.
  If an unexpected data type is found, an exception is thrown. 
 Message: Date cannot be cast from type ${typeString}
+
+# Example Project
+
+[Here is a sample project commit](https://github.com/windhandel/angular-6-registration-login-example/commit/c6875c1ed6c077935568a25f6d0347e3b53445cd?diff=split) if you'd like to view the changes necessary to implement the angular-http-deserializer.
