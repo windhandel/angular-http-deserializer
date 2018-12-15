@@ -46,6 +46,18 @@ describe('Deserialize Complex Types', () => {
         expect(deserialized.products[0].product.hasName).toBeTruthy('hasName failed.');
     });
 
+    it('should deserialize Order array', () => {
+        let deserialized: Complex.Order[] = <Complex.Order[]>deOrder([
+            jsonOrder,
+            jsonOrder
+        ]);
+        
+        let firstOrder = deserialized[0];
+        expect(firstOrder).toBeTruthy();
+        expect(firstOrder.orderedBy.wasCreatedFirstOfMonth).toBeTruthy('wasCreatedFirstOfMonth failed.');
+        expect(firstOrder.products[0].product.hasName).toBeTruthy('hasName failed.');
+    });
+
     it('should deserialize OrderProduct expected array', () => {
         const errorMsg = 'Array deserialization error. ErrorNotArrayOrderProduct.product must be array.';
         expect(() => deFailedOrderProduct(jsonOrder.products[0])).toThrowError(errorMsg);
