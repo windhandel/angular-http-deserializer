@@ -33,6 +33,7 @@ var productNull = {
 };
 describe('Deserialize Complex Types', function () {
     var deOrder = index_1.default(Complex.Order);
+    var deOrderArray = index_1.default(Complex.Order);
     var deFailedOrderProduct = index_1.default(Complex.ErrorNotArrayOrderProduct);
     var deOrderProduct = index_1.default(Complex.OrderProduct);
     it('should deserialize Order', function () {
@@ -42,7 +43,7 @@ describe('Deserialize Complex Types', function () {
         expect(deserialized.products[0].product.hasName).toBeTruthy('hasName failed.');
     });
     it('should deserialize Order array', function () {
-        var deserialized = deOrder([
+        var deserialized = deOrderArray([
             jsonOrder,
             jsonOrder
         ]);

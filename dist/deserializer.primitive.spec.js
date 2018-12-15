@@ -27,9 +27,13 @@ function dateArrayComparer(input) {
 }
 describe('Deserialize Basic Types', function () {
     var deString = index_1.default(String);
+    var deStringArray = index_1.default(String);
     var deNumber = index_1.default(Number);
+    var deNumberArray = index_1.default(Number);
     var deDate = index_1.default(Date);
+    var deDateArray = index_1.default(Date);
     var deBool = index_1.default(Boolean);
+    var deBoolArray = index_1.default(Boolean);
     it('should deserialize string', function () {
         var input = '2';
         be(deString, input, input);
@@ -39,7 +43,7 @@ describe('Deserialize Basic Types', function () {
     });
     it('should deserialize string array', function () {
         var input = ['2', '4'];
-        be(deString, input, input);
+        be(deStringArray, input, input);
     });
     it('should deserialize number', function () {
         var input = 2;
@@ -51,7 +55,7 @@ describe('Deserialize Basic Types', function () {
     it('should deserialize number array', function () {
         var output = [2, 4];
         var input = output.map(function (v) { return v.toString(); });
-        be(deNumber, input, output);
+        be(deNumberArray, input, output);
     });
     it('should deserialize string date', function () {
         var input = new Date();
@@ -65,7 +69,7 @@ describe('Deserialize Basic Types', function () {
         diffDate.setHours(diffDate.getHours() - 4);
         var output = [new Date(), diffDate];
         var input = output.map(function (v) { return dateformat_1.default(v, 'yyyy-mm-dd HH:MM:ss.l'); });
-        be(deDate, input, output, dateArrayComparer);
+        be(deDateArray, input, output, dateArrayComparer);
     });
     it('should deserialize boolean true', function () {
         var input = true;
@@ -88,7 +92,7 @@ describe('Deserialize Basic Types', function () {
     });
     it('should deserialize boolean array', function () {
         var input = [true, false, true];
-        be(deBool, input, input);
+        be(deBoolArray, input, input);
     });
 });
 //# sourceMappingURL=deserializer.primitive.spec.js.map

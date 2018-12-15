@@ -1,7 +1,7 @@
-import deserializer, { deepDeserializeSig, primitiveObjectOrArray, outputValue, inputValue } from './index';
+import deserializer, { deepDeserializeSig, inputOrArray, outputValue, inputValue, outputOrArray } from './index';
 import dateFormat from 'dateformat';
 
-function be<T extends outputValue>(deserializer: deepDeserializeSig<T>, input: primitiveObjectOrArray<inputValue>, output?: primitiveObjectOrArray<T>, comparisonConverter?: (v) => any) : void {
+function be<T extends inputValue>(deserializer: deepDeserializeSig<T>, input: inputOrArray<inputValue>, output?: outputOrArray<T>, comparisonConverter?: (v) => any) : void {
     let value = deserializer(input);
     if (comparisonConverter) {
         expect(comparisonConverter(value)).toEqual(comparisonConverter(output));
@@ -26,9 +26,13 @@ function dateArrayComparer(input: Date[]): number[] {
 
 describe('Deserialize Basic Types', () => {
     let deString = deserializer<String>(String);
+    let deStringArray = deserializer<String[]>(String);
     let deNumber = deserializer<Number>(Number);
+    let deNumberArray = deserializer<Number[]>(Number);
     let deDate = deserializer<Date>(Date);
+    let deDateArray = deserializer<Date[]>(Date);
     let deBool = deserializer<Boolean>(Boolean);
+    let deBoolArray = deserializer<Boolean[]>(Boolean);
 
     it('should deserialize string', () => {
         let input = '2';
@@ -41,7 +45,7 @@ describe('Deserialize Basic Types', () => {
 
     it('should deserialize string array', () => {
         let input = [ '2', '4' ];
-        be(deString, input, input);
+        be(deStringArray, input, input);
     });
 
     it('should deserialize number', () => {
@@ -56,7 +60,7 @@ describe('Deserialize Basic Types', () => {
     it('should deserialize number array', () => {
         let output = [ 2, 4 ];
         let input = output.map(v => v.toString())
-        be(deNumber, input, output);
+        be(deNumberArray, input, output);
     });
 
     it('should deserialize string date', () => {
@@ -73,7 +77,7 @@ describe('Deserialize Basic Types', () => {
         diffDate.setHours(diffDate.getHours() - 4);
         let output = [ new Date(), diffDate ];
         let input = output.map(v => dateFormat(v, 'yyyy-mm-dd HH:MM:ss.l'));
-        be(deDate, input, output, dateArrayComparer);
+        be(deDateArray, input, output, dateArrayComparer);
     });
 
     it('should deserialize boolean true', () => {
@@ -102,6 +106,6 @@ describe('Deserialize Basic Types', () => {
 
     it('should deserialize boolean array', () => {
         let input = [ true, false, true ];
-        be(deBool, input, input);
+        be(deBoolArray, input, input);
     });
 });

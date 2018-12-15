@@ -35,11 +35,12 @@ let productNull = {
 
 describe('Deserialize Complex Types', () => {
     let deOrder = deserializer<Complex.Order>(Complex.Order);
+    let deOrderArray = deserializer<Complex.Order[]>(Complex.Order);
     let deFailedOrderProduct = deserializer<Complex.ErrorNotArrayOrderProduct>(Complex.ErrorNotArrayOrderProduct);
     let deOrderProduct = deserializer<Complex.OrderProduct>(Complex.OrderProduct);
 
     it('should deserialize Order', () => {
-        let deserialized: Complex.Order = <Complex.Order>deOrder(jsonOrder);
+        let deserialized: Complex.Order = deOrder(jsonOrder);
         
         expect(deserialized).toBeTruthy();
         expect(deserialized.orderedBy.wasCreatedFirstOfMonth).toBeTruthy('wasCreatedFirstOfMonth failed.');
@@ -47,7 +48,7 @@ describe('Deserialize Complex Types', () => {
     });
 
     it('should deserialize Order array', () => {
-        let deserialized: Complex.Order[] = <Complex.Order[]>deOrder([
+        let deserialized: Complex.Order[] = deOrderArray([
             jsonOrder,
             jsonOrder
         ]);

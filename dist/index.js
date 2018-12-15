@@ -59,11 +59,11 @@ function converter(type, valueTypeString, deserializeValue, mustBeArray) {
     switch (typeString) {
         case 'boolean':
             if (valueTypeString == stringType) {
-                return stringValue.toLowerCase() == 'true';
+                return (stringValue.toLowerCase() == 'true');
             }
         case 'number':
             if (valueTypeString == stringType) {
-                return stringValue.indexOf('.') ? parseFloat(stringValue) : parseInt(stringValue);
+                return (stringValue.indexOf('.') ? parseFloat(stringValue) : parseInt(stringValue));
             }
         case 'bigint':
             // By default, cast values to their type if we get strings.
@@ -92,12 +92,11 @@ function converter(type, valueTypeString, deserializeValue, mustBeArray) {
                 return deserializeValue;
             }
             return deepDeserialize(type, deserializeValue, mustBeArray);
-        default:
+        default: // symbol, function
             return null;
     }
 }
 function deepDeserialize(type, deserialize, mustBeArray) {
-    //debugger;
     var isArray = Array.isArray(deserialize);
     var typeCheckValue = isArray ? deserialize[0] : deserialize;
     var typeString = typeof typeCheckValue;
@@ -109,7 +108,7 @@ function deepDeserialize(type, deserialize, mustBeArray) {
     if (mustBeArray != undefined && mustBeArray && (!isArray || typeString == 'undefined')) {
         throw new Error('Array deserialization error. Object must be array.');
     }
-    if (isArray) {
+    if (Array.isArray(deserialize)) {
         return deserialize.map(function (v, i, arr) {
             return converter(type, typeString, v, false);
         });
