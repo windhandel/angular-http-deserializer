@@ -3,7 +3,7 @@ Angular Http Deserializer
 
 The current Angular Http Client, since it uses typescript, uses duck typing for returning objects.  i.e. The object being returned is not an instance of the model, it's a json object emulating the shape of the model object.
 
-Therefore, any getters, methods, etc on the model object being returned will not exist.  This library was built specifically in order to eliminate this problem and provide a way of easily returning constructed instances of the model objects from the Angular Http Client.
+Therefore, any getters, methods, etc. on the model object being returned will not exist and instanceof will not work.  This library was built specifically in order to deserialize deep object models and provide a way of easily returning constructed instances of the model objects from the Angular Http Client.
 
 # Problem Statement
 
@@ -41,7 +41,9 @@ class Cow {
   createdDate: Date;
 }
 
-let cow: Cow = Object.assign(new Cow(), res as Cow);
+let cow: Cow = Object.assign(new Cow(), {
+    createdDate: '1/1/2018 12:00pm'
+});
 // Fails
 expect(cow.createdDate instanceOf Date).toBeTruth();
 ```
