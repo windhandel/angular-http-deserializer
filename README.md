@@ -109,7 +109,7 @@ export class Product {
     name: string;
 
     get hasName(): boolean {
-        return !!this.name;
+        return this.name && this.name.length > 0;
     }
 }
 
