@@ -21,7 +21,7 @@
   "scripts": {
     "test": "karma start karma.conf.js",
     "build": "tsc",
-    "complex": "tsc & node dist/out-tsc/testdata/complex.js"
+    "complex": "tsc & node dist/testdata/complex.js"
   },
   "repository": {
     "type": "git",

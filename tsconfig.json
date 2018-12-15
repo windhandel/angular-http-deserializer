@@ -2,9 +2,9 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./src",
-    "outDir": "./dist/out-tsc",
+    "outDir": "./dist",
     "sourceMap": true,
-    "declaration": false,
+    "declaration": true,
     "module": "CommonJS",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
