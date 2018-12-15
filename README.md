@@ -1,7 +1,7 @@
 # angular-http-deserializer
 Angular Http Deserializer
 
-The current Angular Http Client, since it uses typescript, uses duck typing for returning objects.  i.e. The object being returned is not a constructed version of the object which you wish to have returned.
+The current Angular Http Client, since it uses typescript, uses duck typing for returning objects.  i.e. The object being returned is not an instance of the model, it's a json object emulating the shape of the model object.
 
 Therefore, any getters, methods, etc on the model object being returned will not exist.  This library was built specifically in order to eliminate this problem and provide a way of easily returning constructed instances of the model objects from the Angular Http Client.
 
