@@ -1,6 +1,6 @@
 {
   "name": "angular-http-deserializer",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Deserialization Interceptor for Angular",
   "main": "dist/index.js",
   "types" : "dist/index.d.ts",
@@ -21,7 +21,8 @@
   "scripts": {
     "test": "karma start karma.conf.js",
     "build": "tsc",
-    "complex": "tsc & node dist/testdata/complex.js"
+    "complex": "tsc & node dist/testdata/complex.js",
+    "publish": "tsc & npm publish"
   },
   "repository": {
     "type": "git",
