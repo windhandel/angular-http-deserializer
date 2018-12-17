@@ -19,7 +19,11 @@ export declare class Order {
     orderedBy: User;
     createdDate: Date;
 }
-export declare class ErrorNotArrayOrderProduct {
+export declare class OrderProductMissingAnnotation {
+    product: Product;
+    quantity: number;
+}
+export declare class OrderProductMissingAnnotationSkipped {
     product: Product;
     quantity: number;
 }

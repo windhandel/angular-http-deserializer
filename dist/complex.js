@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = require("tslib");
-var index_1 = require("./index");
+var decorators_1 = require("./decorators");
 var User = /** @class */ (function () {
     function User() {
     }
@@ -13,7 +13,7 @@ var User = /** @class */ (function () {
         configurable: true
     });
     tslib_1.__decorate([
-        index_1.dataType(Date),
+        decorators_1.dataType(Date),
         tslib_1.__metadata("design:type", Date)
     ], User.prototype, "createdDate", void 0);
     return User;
@@ -36,7 +36,7 @@ var OrderProduct = /** @class */ (function () {
     function OrderProduct() {
     }
     tslib_1.__decorate([
-        index_1.dataType(Product),
+        decorators_1.dataType(Product),
         tslib_1.__metadata("design:type", Product)
     ], OrderProduct.prototype, "product", void 0);
     return OrderProduct;
@@ -46,28 +46,34 @@ var Order = /** @class */ (function () {
     function Order() {
     }
     tslib_1.__decorate([
-        index_1.dataType(OrderProduct, true),
+        decorators_1.dataType(OrderProduct, true),
         tslib_1.__metadata("design:type", Array)
     ], Order.prototype, "products", void 0);
     tslib_1.__decorate([
-        index_1.dataType(User),
+        decorators_1.dataType(User),
         tslib_1.__metadata("design:type", User)
     ], Order.prototype, "orderedBy", void 0);
     tslib_1.__decorate([
-        index_1.dataType(Date),
+        decorators_1.dataType(Date),
         tslib_1.__metadata("design:type", Date)
     ], Order.prototype, "createdDate", void 0);
     return Order;
 }());
 exports.Order = Order;
-var ErrorNotArrayOrderProduct = /** @class */ (function () {
-    function ErrorNotArrayOrderProduct() {
+var OrderProductMissingAnnotation = /** @class */ (function () {
+    function OrderProductMissingAnnotation() {
+    }
+    return OrderProductMissingAnnotation;
+}());
+exports.OrderProductMissingAnnotation = OrderProductMissingAnnotation;
+var OrderProductMissingAnnotationSkipped = /** @class */ (function () {
+    function OrderProductMissingAnnotationSkipped() {
     }
     tslib_1.__decorate([
-        index_1.dataType(Product, true),
+        decorators_1.skip(),
         tslib_1.__metadata("design:type", Product)
-    ], ErrorNotArrayOrderProduct.prototype, "product", void 0);
-    return ErrorNotArrayOrderProduct;
+    ], OrderProductMissingAnnotationSkipped.prototype, "product", void 0);
+    return OrderProductMissingAnnotationSkipped;
 }());
-exports.ErrorNotArrayOrderProduct = ErrorNotArrayOrderProduct;
+exports.OrderProductMissingAnnotationSkipped = OrderProductMissingAnnotationSkipped;
 //# sourceMappingURL=complex.js.map
