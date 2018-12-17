@@ -8,7 +8,8 @@ export type convertInput = jsonKey | boolean | undefined | null;
 export type indexSig = { [ key: string ]: any, constructor: Function };
 export type inputValue = indexSig | convertInput;
 export type outputValue = inputValue | Date; // Dates don't come in Json.
-export type deserializeSig<T extends outputValue | outputValue[]> = (deserialize: inputValue | inputValue[], mustBeArray?: boolean) => T;
+// Making the signature compatible with observable's map operator for ease of use.
+export type deserializeSig<T extends outputValue | outputValue[]> = (deserialize: inputValue | inputValue[], mustBeArray?: boolean | number) => T;
 export type converter = { [ key: string]: (deserializeValue: inputValue, expectedType?: string | newable, valueTypeString?: string) => outputValue };
 export const Types = {
     string: 'string',

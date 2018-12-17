@@ -65,14 +65,16 @@ export function convert<T extends outputValue>(deserializeValue: inputValue, exp
     }
 }
 
-export function deserialize<T extends outputValue>(type: newable, deserializeData: inputValue, mustBeArray?: boolean): T | T[] {
+export function deserialize<T extends outputValue>(type: newable, deserializeData: inputValue, mustBeArray?: boolean | number): T | T[] {
+    // Overloaded to make it passable directly to map operator.  Reset to be specific to boolean.
+    mustBeArray = mustBeArray == true;
     const isArray = Array.isArray(deserializeData);
     const typeCheckValue: inputValue = isArray ? (<any>deserializeData)[0] : deserializeData;
     let valueTypeString: string = getTypeOf(typeCheckValue);
     let objectTypeString = getTypeOfCtor(type);
     const isTypeObject = checkIsObject(valueTypeString) || ((deserializeData == null || deserializeData == undefined) && checkIsObject(objectTypeString));
 
-    if (mustBeArray != undefined && mustBeArray && (!isArray || valueTypeString == 'undefined')) {
+    if (mustBeArray && (!isArray || valueTypeString == 'undefined')) {
         debugger;
         throw new Error('Array deserialization error. Object must be array.');
     }
