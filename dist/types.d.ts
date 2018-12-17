@@ -14,7 +14,7 @@ export declare type indexSig = {
 };
 export declare type inputValue = indexSig | convertInput;
 export declare type outputValue = inputValue | Date;
-export declare type deserializeSig<T extends outputValue | outputValue[]> = (deserialize: inputValue | inputValue[], mustBeArray?: boolean) => T;
+export declare type deserializeSig<T extends outputValue | outputValue[]> = (deserialize: inputValue | inputValue[], mustBeArray?: boolean | number) => T;
 export declare type converter = {
     [key: string]: (deserializeValue: inputValue, expectedType?: string | newable, valueTypeString?: string) => outputValue;
 };

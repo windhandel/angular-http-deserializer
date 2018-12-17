@@ -75,7 +75,6 @@ export function deserialize<T extends outputValue>(type: newable, deserializeDat
     const isTypeObject = checkIsObject(valueTypeString) || ((deserializeData == null || deserializeData == undefined) && checkIsObject(objectTypeString));
 
     if (mustBeArray && (!isArray || valueTypeString == 'undefined')) {
-        debugger;
         throw new Error('Array deserialization error. Object must be array.');
     }
 
@@ -118,7 +117,6 @@ export function deserialize<T extends outputValue>(type: newable, deserializeDat
                     throw new Error(`${propertyName} array not expected.`);
                 }
                 
-                // debugger;
                 if (isPropObject) {
                     newO[key] = deserialize(dataType.Type, keyValue, dataType.IsArray);
                 } else if (converters) {

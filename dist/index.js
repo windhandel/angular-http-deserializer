@@ -66,12 +66,14 @@ function convert(deserializeValue, expectedType, valueTypeString) {
 }
 exports.convert = convert;
 function deserialize(type, deserializeData, mustBeArray) {
+    // Overloaded to make it passable directly to map operator.  Reset to be specific to boolean.
+    mustBeArray = mustBeArray == true;
     var isArray = Array.isArray(deserializeData);
     var typeCheckValue = isArray ? deserializeData[0] : deserializeData;
     var valueTypeString = types_1.getTypeOf(typeCheckValue);
     var objectTypeString = types_1.getTypeOfCtor(type);
     var isTypeObject = types_1.checkIsObject(valueTypeString) || ((deserializeData == null || deserializeData == undefined) && types_1.checkIsObject(objectTypeString));
-    if (mustBeArray != undefined && mustBeArray && (!isArray || valueTypeString == 'undefined')) {
+    if (mustBeArray && (!isArray || valueTypeString == 'undefined')) {
         debugger;
         throw new Error('Array deserialization error. Object must be array.');
     }
