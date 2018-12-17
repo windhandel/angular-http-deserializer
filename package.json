@@ -1,9 +1,9 @@
 {
   "name": "angular-http-deserializer",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Deserialization Interceptor for Angular",
-  "main": "dist/index.js",
-  "types" : "dist/index.d.ts",
+  "main": "index.js",
+  "types" : "index.d.ts",
   "dependencies": {
     "dateformat": "^3.0.3",
     "reflect-metadata": "^0.1.12",
@@ -22,7 +22,8 @@
     "test": "karma start karma.conf.js",
     "build": "tsc",
     "complex": "tsc & node dist/testdata/complex.js",
-    "publish": "tsc & npm publish"
+    "pub-cp": "rsync -r ./dist/* ./pub --exclude=\"*.spec.*\" && cp package.json ./pub",
+    "pub": "tsc && npm run pub-cp && cd pub && npm publish"
   },
   "repository": {
     "type": "git",
