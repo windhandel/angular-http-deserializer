@@ -1,4 +1,4 @@
-import { dataType } from './index';
+import { dataType, skip } from './decorators';
 
 export class User {
     id: number;
@@ -35,9 +35,13 @@ export class Order {
     createdDate: Date;
 }
 
-export class ErrorNotArrayOrderProduct {
-    @dataType(Product, true)
+export class OrderProductMissingAnnotation {
     product: Product;
     quantity: number;
 }
 
+export class OrderProductMissingAnnotationSkipped {
+    @skip()
+    product: Product;
+    quantity: number;
+}

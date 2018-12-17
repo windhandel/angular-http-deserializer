@@ -1,7 +1,8 @@
-import deserializer, { deepDeserializeSig, inputOrArray, outputValue, inputValue, outputOrArray } from './index';
+import deserializer from './index';
+import { deserializeSig, outputValue, inputValue } from './types';
 import dateFormat from 'dateformat';
 
-function be<T extends inputValue>(deserializer: deepDeserializeSig<T>, input: inputOrArray<inputValue>, output?: outputOrArray<T>, comparisonConverter?: (v) => any) : void {
+function be(deserializer: deserializeSig<any>, input: inputValue, output?: outputValue, comparisonConverter?: (v) => any) : void {
     let value = deserializer(input);
     if (comparisonConverter) {
         expect(comparisonConverter(value)).toEqual(comparisonConverter(output));
