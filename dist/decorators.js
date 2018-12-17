@@ -16,6 +16,7 @@ function dataType(type, isArray) {
 exports.dataType = dataType;
 function converters(converters) {
     return function (target, propertyKey, descriptor) {
+        debugger;
         Reflect.defineMetadata(converterMetadataKey, converters, target, propertyKey);
     };
 }

@@ -17,7 +17,6 @@ export function dataType(type: newable, isArray?: boolean): Function {
 
 export function converters(converters: converter): Function {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-        debugger;
         Reflect.defineMetadata(converterMetadataKey, converters, target, propertyKey);
     };
 }

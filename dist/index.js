@@ -74,7 +74,6 @@ function deserialize(type, deserializeData, mustBeArray) {
     var objectTypeString = types_1.getTypeOfCtor(type);
     var isTypeObject = types_1.checkIsObject(valueTypeString) || ((deserializeData == null || deserializeData == undefined) && types_1.checkIsObject(objectTypeString));
     if (mustBeArray && (!isArray || valueTypeString == 'undefined')) {
-        debugger;
         throw new Error('Array deserialization error. Object must be array.');
     }
     if (Array.isArray(deserializeData)) {
@@ -112,7 +111,6 @@ function deserialize(type, deserializeData, mustBeArray) {
                 if (!dataType.IsArray && isValueArray) {
                     throw new Error(propertyName + " array not expected.");
                 }
-                // debugger;
                 if (isPropObject) {
                     newO[key] = deserialize(dataType.Type, keyValue, dataType.IsArray);
                 }
