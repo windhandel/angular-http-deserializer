@@ -263,3 +263,5 @@ Message: Converters cannot be skipped for property ${propertyName}.
 # Example Project
 
 [Here is a sample project commit](https://github.com/windhandel/angular-6-registration-login-example/commit/c6875c1ed6c077935568a25f6d0347e3b53445cd?diff=split) if you'd like to view the changes necessary to implement the angular-http-deserializer.
+
+You'll want to [review the updates to the method signature](https://github.com/windhandel/angular-6-registration-login-example/commit/d5cc92a199909586b191b07bc21e76f3f41d9cfe) commit as well.
