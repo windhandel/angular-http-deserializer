@@ -50,7 +50,7 @@ let cow: Cow = Object.assign(new Cow(), {
 expect(cow.createdDate instanceOf Date).toBeTruth();
 ```
 
-* [Object.setPrototypeOf](https://stackoverflow.com/questions/49499941/cant-map-angular5-httpclient-responses-to-my-typescript-classes#answer-49500145)
+* [Object.setPrototypeOf](https://stackoverflow.com/questions/35573527/angular-2-map-http-response-to-instance-of-class#answer-43790188)
 
 This has the previously mentioned issues, along with being [very poor performance as described here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf).
 
