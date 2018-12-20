@@ -30,11 +30,11 @@ Some solutions on SO include:
 
 * [Object.assign After Construction](https://stackoverflow.com/questions/50452431/angular-6-httpclient-return-instance-of-class#answer-50469920)
 
-This solution is not simple enough and requires you to write constructors for each object in order for your objec to deserialized.
+This solution is not simple enough and requires you to write constructors for each object in order for your object to be deserialized.
 
-Deeply nested (including array) objects are not handled with this solution without more custom code.
+Deeply nested (including array) objects are not handled with this solution without more custom constructor code.
 
-This solution has a number of pitfalls.  The Date data type is entirely missed because the incoming Json type will be string or number and will be assigned as such on the constructed object, thereby overwriting the property with the wrong type.
+This solution has a number of pitfalls.  The Date data type is entirely missed because the incoming Json type will be string or number and will be assigned as such on the constructed object, thereby overwriting the property with the wrong type, which fail silently because of typescript's duck typing.
 
 [Fail](https://jsfiddle.net/windhandelimprov/upkrd4bj/3/): 
 ```javascript
@@ -225,7 +225,7 @@ This way, within your tests the proper objects will now be available and propert
 
 The deserializer is built fairly resiliently so that most things pass.  Currently, no custom deserialization is built into the annotation to enable overriding how deserialization works.  Ya get what ya get.
 
-There are 4 expected exceptions within this module. They are the following:
+There are 6 expected exceptions within this module. They are the following:
 
 ## Missing necessary dataType annotation
 
