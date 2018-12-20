@@ -1,6 +1,6 @@
 {
   "name": "angular-http-deserializer",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Deserialization Interceptor for Angular",
   "main": "index.js",
   "types" : "index.d.ts",
