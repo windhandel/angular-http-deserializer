@@ -70,7 +70,7 @@ export function deserialize<T extends outputValue>(type: newable, deserializeDat
     mustBeArray = mustBeArray == true;
     const isArray = Array.isArray(deserializeData);
     const typeCheckValue: inputValue = isArray ? (<any>deserializeData)[0] : deserializeData;
-    let valueTypeString: string = getTypeOf(typeCheckValue);
+    let valueTypeString: string = isArray && deserializeData.length == 0 ? '' : getTypeOf(typeCheckValue);
     let objectTypeString = getTypeOfCtor(type);
     const isTypeObject = checkIsObject(valueTypeString) || ((deserializeData == null || deserializeData == undefined) && checkIsObject(objectTypeString));
 
@@ -117,7 +117,7 @@ export function deserialize<T extends outputValue>(type: newable, deserializeDat
                     throw new Error(`${propertyName} array not expected.`);
                 }
                 
-                if (isPropObject) {
+                if (isPropObject && !(propTypeString == 'object' && converters && converters[propTypeString])) {
                     newO[key] = deserialize(dataType.Type, keyValue, dataType.IsArray);
                 } else if (converters) {
                     let converter = converters[propTypeString];
